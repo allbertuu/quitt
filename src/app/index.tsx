@@ -1,98 +1,187 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList, StyleSheet, View } from "react-native";
+import { Text } from "../components/text";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+interface Debt {
+  name: string;
+  category: string;
+  interest: number;
+  totalValue: number;
+}
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+const debts: Debt[] = [
+  {
+    name: "Cartão Nubank",
+    category: "Cartão de crédito",
+    interest: 0.161,
+    totalValue: 1522.02,
+  },
+  {
+    name: "Cartão Inter",
+    category: "Cartão de crédito",
+    interest: 0.179,
+    totalValue: 3497.09,
+  },
+  {
+    name: "Cartão Riachuelo",
+    category: "Cartão de crédito",
+    interest: 0.1999,
+    totalValue: 143.91,
+  },
+  {
+    name: "Empréstimo Mercado Livre",
+    category: "Empréstimo pessoal",
+    interest: 0.01,
+    totalValue: 12.99,
+  },
+];
+
+function DebtItem({ name, category, interest, totalValue }: Debt) {
+  const interestPercentage = (interest * 100).toFixed(2) + "%";
+  const formattedTotalValue = `R$ ${totalValue.toFixed(2)}`;
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+    <View style={styles.debtCard}>
+      {/* Cabeçalho do Card: Nome e Categoria em estilo Badge */}
+      <View style={styles.cardHeader}>
+        <Text style={styles.debtName}>{name}</Text>
+        <View style={styles.categoryBadge}>
+          <Text style={styles.categoryText}>{category}</Text>
+        </View>
+      </View>
+
+      {/* Linha divisória sutil */}
+      <View style={styles.cardDivider} />
+
+      {/* Rodapé do Card: Juros e Valor Total alinhados */}
+      <View style={styles.cardFooter}>
+        <View>
+          <Text style={styles.label}>Taxa de Juros</Text>
+          <Text style={styles.valuePrimary}>{interestPercentage}</Text>
+        </View>
+        <View style={{ alignItems: "flex-end" }}>
+          <Text style={styles.label}>Valor Total</Text>
+          <Text style={styles.valuePrimary}>{formattedTotalValue}</Text>
+        </View>
+      </View>
+    </View>
   );
 }
 
-export default function HomeScreen() {
+export default function Home() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      {/* Cabeçalho da Tela */}
+      <View style={styles.headerContainer}>
+        <Text style={styles.screenTitle}>Minhas Dívidas</Text>
+        <Text style={styles.screenSubtitle}>
+          Acompanhe seus compromissos financeiros
+        </Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+      {/* Lista de Dívidas */}
+      <FlatList
+        data={debts}
+        renderItem={({ item }) => (
+          <DebtItem
+            name={item.name}
+            category={item.category}
+            interest={item.interest}
+            totalValue={item.totalValue}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        )}
+        keyExtractor={(item) => item.name}
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#F8FAFC", // Fundo leve e moderno
+    paddingTop: 24,
   },
-  safeArea: {
+  headerContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 16,
+  },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#0F172A",
+  },
+  screenSubtitle: {
+    fontSize: 14,
+    color: "#64748B",
+    marginTop: 4,
+  },
+  listContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+  },
+  debtCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16, // Bordas bem arredondadas
+    padding: 16,
+    marginBottom: 12,
+    // Sombras leves compatíveis com iOS e Android
+    shadowColor: "#64748B",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: "#F1F5F9", // Borda sutil minimalista
+  },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  debtName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1E293B",
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    marginRight: 8,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  categoryBadge: {
+    backgroundColor: "#EFF6FF",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
-  title: {
-    textAlign: 'center',
+  categoryText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#3B82F6",
   },
-  code: {
-    textTransform: 'uppercase',
+  cardDivider: {
+    height: 1,
+    backgroundColor: "#F1F5F9",
+    marginBottom: 12,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  cardFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  label: {
+    fontSize: 11,
+    color: "#94A3B8",
+    marginBottom: 2,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  valuePrimary: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#475569",
   },
 });
+
+
+
