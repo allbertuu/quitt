@@ -1,15 +1,23 @@
-import { View, StyleSheet } from "react-native";
 import { Text } from "@/components/ui/text";
+import { Debt } from "@/entities/debt";
+import { StyleSheet, View } from "react-native";
 
-export interface Debt {
-  name: string;
-  category: string;
-  interest: number;
-  totalValue: number;
-}
+type DebtItemProps = {
+  name: Debt["name"];
+  category: Debt["category"];
+  interest: Debt["interest"];
+  totalValue: Debt["total_value"];
+};
 
-export function DebtItem({ name, category, interest, totalValue }: Debt) {
-  const interestPercentage = (interest * 100).toFixed(2) + "%";
+export function DebtItem({
+  name,
+  category,
+  interest,
+  totalValue,
+}: DebtItemProps) {
+  const interestPercentage = interest
+    ? (interest * 100).toFixed(2) + "%"
+    : "Vazio";
   const formattedTotalValue = `R$ ${totalValue.toFixed(2)}`;
 
   return (
@@ -50,10 +58,10 @@ const styles = StyleSheet.create({
     shadowColor: "#64748B",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
-    shadowRadius: 12,
+    shadowRadius: 6,
     elevation: 3,
     borderWidth: 1,
-    borderColor: "#F1F5F9", // Borda sutil minimalista
+    borderColor: "#dddddd", // Borda sutil minimalista
   },
   cardHeader: {
     flexDirection: "row",
