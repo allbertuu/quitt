@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 export function DebtsList() {
-  const { debts, isPending, error, deleteDebt } = useDebts();
+  const { debts, isPending, error, deleteDebtMutation, refetch } = useDebts();
   const colorScheme = useColorScheme();
 
   if (isPending) {
@@ -51,13 +51,17 @@ export function DebtsList() {
           category={debt.category}
           interest={debt.interest}
           totalValue={debt.total_value}
-          onDelete={() => deleteDebt(debt.id)}
+          onDelete={() => deleteDebtMutation.mutate(debt.id)}
         />
       )}
       keyExtractor={(debt) => debt.name}
       contentContainerStyle={styles.listContainer}
-      showsVerticalScrollIndicator={false}
       ListEmptyComponent={<CustomText>Não há dívidas cadastradas.</CustomText>}
+      onRefresh={() => {
+        refetch();
+      }}
+      refreshing={deleteDebtMutation.isPending}
+      extraData={debts}
     />
   );
 }

@@ -1,6 +1,8 @@
-import { Text } from "@/components/ui/text";
 import { Debt } from "@/entities/debt";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Host, Icon } from "@expo/ui";
+import { StyleSheet, Text, View } from "react-native";
+import { trashIcon } from "./icons";
+import { Modal } from "./ui/modal";
 
 type DebtItemProps = {
   name: Debt["name"];
@@ -26,11 +28,26 @@ export function DebtItem({
     <View style={styles.debtCard}>
       {/* Cabeçalho do Card: Nome e Categoria em estilo Badge */}
       <View style={styles.cardHeader}>
-        <Pressable onPress={onDelete}>
-          <Text style={styles.debtName}>{name}</Text>
-        </Pressable>
-        <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{category}</Text>
+        <Text style={styles.debtName} numberOfLines={1}>
+          {name}
+        </Text>
+
+        <View style={styles.headerRightActions}>
+          <View style={styles.categoryBadge}>
+            <Text style={styles.categoryText}>{category}</Text>
+          </View>
+
+          {/* Botão de Lixeira */}
+          <Modal
+            title="Confirmação de exclusão"
+            description={`Você deseja excluir ${name}?`}
+            onConfirm={onDelete}
+            variant="deleteButton"
+          >
+            <Host matchContents>
+              <Icon name={trashIcon} size={18} color="#EF4444" />
+            </Host>
+          </Modal>
         </View>
       </View>
 
@@ -112,5 +129,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#475569",
+  },
+  headerRightActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8, // Espaçamento entre a badge e o ícone de lixeira
   },
 });
