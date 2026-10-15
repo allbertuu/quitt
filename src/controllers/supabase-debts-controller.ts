@@ -12,7 +12,12 @@ export class SupabaseDebtsController implements DebtsUseCase {
 
     return data as Debt[];
   }
+
   async deleteDebt(id: Debt["id"]): Promise<void> {
-    
+    const { error } = await supabase.from("debts").delete().eq("id", id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
   }
 }

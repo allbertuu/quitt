@@ -1,7 +1,7 @@
 import { Debt } from "@/entities/debt";
 import { DebtsUseCase } from "@/usecases/debts-use-case";
 
-export const DEBTS: Debt[] = [
+export let DEBTS: Debt[] = [
   {
     id: 0,
     name: "Cartão Nubank",
@@ -33,7 +33,7 @@ export const DEBTS: Debt[] = [
 ];
 
 export class MockDebtsController implements DebtsUseCase {
-  async getAllDebts(): Promise<Debt[]> {
+  getAllDebts(): Promise<Debt[]> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // reject(new Error("Erro ao carregar dados da API"));
@@ -43,10 +43,17 @@ export class MockDebtsController implements DebtsUseCase {
     });
   }
 
-  async deleteDebt(id: Debt["id"]): Promise<void> {
-    console.log(
-      "Você excluiu:",
-      DEBTS.find((debt) => debt.id === id),
-    );
+  deleteDebt(id: Debt["id"]): Promise<void> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log(
+          "Você excluiu:",
+          DEBTS.find((debt) => debt.id === id),
+        );
+        const debtsUpdated = DEBTS.filter((debt) => debt.id !== id);
+        DEBTS = debtsUpdated;
+        resolve();
+      }, 2000);
+    });
   }
 }
