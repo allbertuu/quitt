@@ -1,8 +1,8 @@
 import { Debt } from "@/entities/debt";
 import { supabase } from "@/infra/supabase-client";
-import { ListDebtsUseCase } from "@/usecases/list-debts-use-case";
+import { DebtsUseCase } from "@/usecases/debts-use-case";
 
-export class SupabaseListDebtsController implements ListDebtsUseCase {
+export class SupabaseDebtsController implements DebtsUseCase {
   async getAllDebts(): Promise<Debt[]> {
     const { data, error } = await supabase.from("debts").select();
 
@@ -11,5 +11,8 @@ export class SupabaseListDebtsController implements ListDebtsUseCase {
     }
 
     return data as Debt[];
+  }
+  async deleteDebt(id: Debt["id"]): Promise<void> {
+    
   }
 }
