@@ -27,6 +27,7 @@ export function useDebts() {
     debts: debtsQuery.data ?? [],
     isPending: debtsQuery.isPending,
     error: debtsQuery.error?.message ?? null,
-    deleteDebt: deleteDebtMutation.mutate,
+    deleteDebtMutation,
+    refetch: debtsQuery.refetch,
   };
 }
