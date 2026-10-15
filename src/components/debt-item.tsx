@@ -1,12 +1,13 @@
 import { Text } from "@/components/ui/text";
 import { Debt } from "@/entities/debt";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 type DebtItemProps = {
   name: Debt["name"];
   category: Debt["category"];
   interest: Debt["interest"];
   totalValue: Debt["total_value"];
+  onDelete: () => void;
 };
 
 export function DebtItem({
@@ -14,6 +15,7 @@ export function DebtItem({
   category,
   interest,
   totalValue,
+  onDelete,
 }: DebtItemProps) {
   const interestPercentage = interest
     ? (interest * 100).toFixed(2) + "%"
@@ -24,7 +26,9 @@ export function DebtItem({
     <View style={styles.debtCard}>
       {/* Cabeçalho do Card: Nome e Categoria em estilo Badge */}
       <View style={styles.cardHeader}>
-        <Text style={styles.debtName}>{name}</Text>
+        <Pressable onPress={onDelete}>
+          <Text style={styles.debtName}>{name}</Text>
+        </Pressable>
         <View style={styles.categoryBadge}>
           <Text style={styles.categoryText}>{category}</Text>
         </View>
