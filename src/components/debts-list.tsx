@@ -1,18 +1,11 @@
 import { DebtItem } from "@/components/debt-item";
-import { Text as CustomText } from "@/components/ui/text";
 import { useDebts } from "@/hooks/use-debts";
-import { Host, Text } from "@expo/ui";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { ErrorMessageCard } from "./error-message-card";
+import { SuccessMessageCard } from "./success-message-card";
 
 export function DebtsList() {
   const { debts, isPending, error, deleteDebtMutation, refetch } = useDebts();
-  const colorScheme = useColorScheme();
 
   if (isPending) {
     return (
@@ -23,23 +16,7 @@ export function DebtsList() {
   }
 
   if (error) {
-    const errorMessage = `Erro ao buscar todas as dívidas: \n | ${error}`;
-
-    return (
-      <Host matchContents>
-        <Text
-          textStyle={{
-            color: colorScheme === "dark" ? "#000000" : "#FFF",
-            fontSize: 16,
-            fontWeight: "700",
-            textAlign: "center",
-          }}
-          style={{ paddingHorizontal: 16 }}
-        >
-          {errorMessage}
-        </Text>
-      </Host>
-    );
+    return <ErrorMessageCard>{error}</ErrorMessageCard>;
   }
 
   return (
@@ -56,7 +33,7 @@ export function DebtsList() {
       )}
       keyExtractor={(debt) => debt.name}
       contentContainerStyle={styles.listContainer}
-      ListEmptyComponent={<CustomText>Não há dívidas cadastradas.</CustomText>}
+      ListEmptyComponent={<SuccessMessageCard />}
       onRefresh={() => {
         refetch();
       }}

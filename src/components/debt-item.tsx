@@ -28,15 +28,17 @@ export function DebtItem({
     <View style={styles.debtCard}>
       {/* Cabeçalho do Card: Nome e Categoria em estilo Badge */}
       <View style={styles.cardHeader}>
-        <Text style={styles.debtName} numberOfLines={1}>
-          {name}
-        </Text>
+        <View style={styles.headerLeftInfo}>
+          <Text style={styles.debtName} numberOfLines={1}>
+            {name}
+          </Text>
 
-        <View style={styles.headerRightActions}>
           <View style={styles.categoryBadge}>
             <Text style={styles.categoryText}>{category}</Text>
           </View>
+        </View>
 
+        <View style={styles.headerRightActions}>
           {/* Botão de Lixeira */}
           <Modal
             title="Confirmação de exclusão"
@@ -45,7 +47,7 @@ export function DebtItem({
             variant="deleteButton"
           >
             <Host matchContents>
-              <Icon name={trashIcon} size={18} color="#EF4444" />
+              <Icon name={trashIcon} size={16 * 1.4} color="#EF4444" />
             </Host>
           </Modal>
         </View>
@@ -90,12 +92,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 12,
   },
+  headerLeftInfo: {
+    flexDirection: "column",
+    gap: 4,
+    alignItems: "flex-start"
+  },
   debtName: {
     fontSize: 16,
     fontWeight: "600",
     color: "#1E293B",
     flex: 1,
     marginRight: 8,
+    marginLeft: 4
   },
   categoryBadge: {
     backgroundColor: "#EFF6FF",
