@@ -1,13 +1,14 @@
 // import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
 import { DebtsList } from "@/components/debts-list";
 import { Text } from "@/components/ui/text";
-import { StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   return (
     <>
       <SafeAreaView style={styles.container}>
+        <StatusBar animated={true} barStyle="dark-content" />
         {/* Cabeçalho da Tela */}
         <View style={styles.headerContainer}>
           <Text style={styles.screenTitle}>Minhas Dívidas</Text>
@@ -45,4 +46,5 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
 
