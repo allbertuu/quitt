@@ -9,3 +9,13 @@ export const trashIcon = Icon.select({
   ios: "trash.fill",
   android: import("@expo/material-symbols/delete.xml"),
 });
+
+export const trophyIcon = Icon.select({
+  ios: "trophy.fill",
+  android: import("@expo/material-symbols/trophy.xml"),
+});
+
+export const errorIcon = Icon.select({
+  ios: "warninglight.fill",
+  android: import("@expo/material-symbols/error.xml"),
+});
