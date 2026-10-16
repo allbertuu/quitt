@@ -5,9 +5,10 @@ import { AddDebtForm } from "./add-debt-form";
 export function AddDebtBottomSheet() {
   const [isPresented, setIsPresented] = useState(false);
 
-  // function handleSubmitForm() {
-  //   setIsPresented(false)
-  // }
+  function handleSubmitForm() {
+    console.log("Enviado!")
+    setIsPresented(false)
+  }
 
   return (
     <>
@@ -18,7 +19,7 @@ export function AddDebtBottomSheet() {
         onDismiss={() => setIsPresented(false)}
         contentPadding={{ bottom: 16, left: 16, right: 16 }}
       >
-        <AddDebtForm />
+        <AddDebtForm onSubmit={handleSubmitForm} />
       </BottomSheet>
     </>
   );
