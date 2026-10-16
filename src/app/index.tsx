@@ -1,7 +1,7 @@
-// import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
+import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
 import { DebtsList } from "@/components/debts-list";
-import { Text } from "@/components/ui/text";
-import { StatusBar, StyleSheet, View } from "react-native";
+import { Button, Column, Host, Row, Spacer, Text } from "@expo/ui";
+import { StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -10,17 +10,27 @@ export default function Home() {
       <SafeAreaView style={styles.container}>
         <StatusBar animated={true} barStyle="dark-content" />
         {/* Cabeçalho da Tela */}
-        <View style={styles.headerContainer}>
-          <Text style={styles.screenTitle}>Minhas Dívidas</Text>
-          <Text style={styles.screenSubtitle}>
-            Acompanhe seus compromissos financeiros
-          </Text>
-        </View>
+        <Host matchContents style={styles.headerViewContainer}>
+          <Column spacing={16 * 0.3} style={styles.headerContainer}>
+            <Text textStyle={styles.screenTitle}>Minhas Dívidas</Text>
+            <Text textStyle={styles.screenSubtitle}>
+              Acompanhe seus compromissos financeiros
+            </Text>
+          </Column>
+        </Host>
 
-        {/* Lista de Dívidas */}
+        <Host
+          matchContents={{ vertical: true }}
+          style={styles.actionsViewContainer}
+        >
+          <Row alignment="center" style={styles.actionsContainer}>
+            <AddDebtBottomSheet />
+            <Spacer flexible />
+            <Button label="Filtros" />
+          </Row>
+        </Host>
+
         <DebtsList />
-
-        {/* <AddDebtBottomSheet /> */}
       </SafeAreaView>
     </>
   );
@@ -33,7 +43,15 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingHorizontal: 20,
+  },
+  headerViewContainer: {
     marginBottom: 16,
+  },
+  actionsViewContainer: {
+    marginBottom: 16,
+  },
+  actionsContainer: {
+    paddingHorizontal: 20,
   },
   screenTitle: {
     fontSize: 24,
@@ -46,5 +64,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-
 
