@@ -1,14 +1,14 @@
 import { DebtItem } from "@/components/debt-item";
-import { MockDebtsController } from "@/controllers/mock-debts-controller";
 import { useDebts } from "@/hooks/use-debts";
+import { MockDebtsUseCase } from "@/usecases/mock-debts-use-case";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { ErrorMessageCard } from "./error-message-card";
 import { SuccessMessageCard } from "./success-message-card";
 
 export function DebtsList() {
-  const mockDebtsController = new MockDebtsController();
+  const mockDebtsUseCase = new MockDebtsUseCase();
   const { debts, isPending, error, deleteDebtMutation, refetch } = useDebts({
-    debtsController: mockDebtsController,
+    debtsUseCase: mockDebtsUseCase,
   });
 
   if (isPending) {
