@@ -1,22 +1,24 @@
-import { MockDebtsController } from "@/controllers/mock-debts-controller";
+import { DebtsUseCase } from "@/usecases/debts-use-case";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+interface UseDebtsProps {
+  debtsController: DebtsUseCase;
+}
 /**
  * Controla o fluxo de renderização e sincronização dos dados externos
  */
-export function useDebts() {
-  const db = new MockDebtsController();
+export function useDebts({ debtsController }: UseDebtsProps) {
   const queryClient = useQueryClient();
 
   // Buscar os dados
   const debtsQuery = useQuery({
     queryKey: ["debts"],
-    queryFn: db.getAllDebts,
+    queryFn: debtsController.getAllDebts,
   });
 
   // Ação de deletar (e atualizar a lista automaticamente)
   const deleteDebtMutation = useMutation({
-    mutationFn: db.deleteDebt,
+    mutationFn: debtsController.deleteDebt,
     onSuccess: () => {
       // Invalida o cache, forçando o React Query a buscar a lista nova imediatamente
       queryClient.invalidateQueries({ queryKey: ["debts"] });
