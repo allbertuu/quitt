@@ -1,7 +1,8 @@
 import { ZodAddDebtSchema } from "@/schemas/add-debt-form-schema/zod-add-debt-form-schema";
-import { BottomSheet, Button } from "@expo/ui";
+import { BottomSheet } from "@expo/ui";
 import { useState } from "react";
 import { AddDebtForm } from "./add-debt-form";
+import { Button } from "./ui/button";
 
 export function AddDebtBottomSheet() {
   const [isPresented, setIsPresented] = useState(false);

@@ -1,6 +1,7 @@
 import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
 import { DebtsList } from "@/components/debts-list";
-import { Button, Column, Host, Row, Spacer, Text } from "@expo/ui";
+import { Button } from "@/components/ui/button";
+import {  Column, Host, Row, Spacer, Text } from "@expo/ui";
 import { StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -26,7 +27,7 @@ export default function Home() {
           <Row alignment="center" style={styles.actionsContainer}>
             <AddDebtBottomSheet />
             <Spacer flexible />
-            <Button label="Filtros" />
+            <Button label="Filtros" disabled />
           </Row>
         </Host>
 
@@ -64,4 +65,5 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
 
