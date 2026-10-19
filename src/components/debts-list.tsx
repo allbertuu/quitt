@@ -2,11 +2,12 @@ import { DebtItem } from "@/components/debt-item";
 import { useDebts } from "@/hooks/use-debts";
 import { MockDebtsUseCase } from "@/usecases/mock-debts-use-case";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { EmptyMessageCard } from "./empty-message-card";
 import { ErrorMessageCard } from "./error-message-card";
-import { SuccessMessageCard } from "./success-message-card";
 
 export function DebtsList() {
   const mockDebtsUseCase = new MockDebtsUseCase();
+  // const supabaseDebtsUseCase = new SupabaseDebtsUseCase();
   const { debts, isPending, error, deleteDebtMutation, refetch } = useDebts({
     debtsUseCase: mockDebtsUseCase,
   });
@@ -37,7 +38,7 @@ export function DebtsList() {
       )}
       keyExtractor={(debt) => debt.name}
       contentContainerStyle={styles.listContainer}
-      ListEmptyComponent={<SuccessMessageCard />}
+      ListEmptyComponent={<EmptyMessageCard />}
       onRefresh={() => {
         refetch();
       }}

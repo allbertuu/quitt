@@ -2,7 +2,7 @@ import { Host, Icon } from "@expo/ui";
 import { StyleSheet, Text, View } from "react-native";
 import { trophyIcon } from "./icons";
 
-export function SuccessMessageCard() {
+export function EmptyMessageCard() {
   return (
     <View style={styles.card}>
       <Host style={styles.iconContainer}>
