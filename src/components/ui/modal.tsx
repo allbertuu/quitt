@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Pressable,
   Modal as RNModal,
@@ -8,87 +7,89 @@ import {
 } from "react-native";
 
 export interface ModalProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  open: boolean;
+  onClose: () => void;
   confirmText?: string;
   cancelText?: string;
   onConfirm?: () => void;
-  children: React.ReactNode;
-  variant?: "default" | "deleteButton";
+  onCancel?: () => void;
 }
 
 export function Modal({
   title,
   description,
-  confirmText = "Confirmar",
-  cancelText = "Cancelar",
+  open,
+  onClose,
+  confirmText,
+  cancelText,
+  onCancel,
   onConfirm,
-  children,
-  variant = "default",
 }: ModalProps) {
-  const [modalVisible, setModalVisible] = useState(false);
+  function handleCancel() {
+    if (onCancel) {
+      onCancel();
+      onClose();
+    }
+    onClose();
+  }
 
-  const handleConfirm = () => {
+  function handleConfirm() {
     if (onConfirm) {
       onConfirm();
+      onClose();
     }
-    setModalVisible(false);
-  };
+    onClose();
+  }
 
   return (
-    <>
-      <RNModal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        {/* Backdrop com escurecimento suave */}
-        <View style={styles.centeredView}>
-          <View style={styles.modalCard}>
-            {/* Header */}
+    <RNModal
+      animationType="fade"
+      transparent={true}
+      visible={open}
+      onRequestClose={onClose}
+    >
+      {/* Backdrop com escurecimento suave */}
+      <View style={styles.centeredView}>
+        <View style={styles.modalCard}>
+          {/* Modal Header */}
+          {title && (
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{title}</Text>
             </View>
+          )}
 
-            {/* Body */}
+          {/* Modal Content */}
+          {description && (
             <View style={styles.modalBody}>
               <Text style={styles.modalDescription}>{description}</Text>
             </View>
+          )}
 
-            {/* Footer */}
-            <View style={styles.modalFooter}>
+          {/* Modal Actions */}
+          <View style={styles.modalFooter}>
+            {cancelText && (
               <Pressable
                 style={[styles.button, styles.buttonCancel]}
-                onPress={() => setModalVisible(false)}
+                onPress={handleCancel}
               >
                 <Text style={styles.cancelButtonText}>{cancelText}</Text>
               </Pressable>
+            )}
 
+            {confirmText && (
               <Pressable
                 style={[styles.button, styles.buttonConfirm]}
                 onPress={handleConfirm}
               >
                 <Text style={styles.confirmButtonText}>{confirmText}</Text>
               </Pressable>
-            </View>
+            )}
           </View>
         </View>
-      </RNModal>
-
-      {/* Gatilho para abrir o modal */}
-      <Pressable
-        onPress={() => setModalVisible(true)}
-        style={({ pressed }) => [
-          variant === "deleteButton" && styles.deleteButton,
-          pressed && { opacity: 0.6 },
-        ]}
-        // Aumenta a área de toque quando botão de deletar
-        hitSlop={variant === "deleteButton" ? 16 : undefined}
-      >
-        {children}
-      </Pressable>
-    </>
+      </View>
+    </RNModal>
   );
 }
 
@@ -161,10 +162,5 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "600",
     fontSize: 14,
-  },
-  deleteButton: {
-    padding: 4,
-    borderRadius: 6,
-    backgroundColor: "#FEF2F2", // Fundo vermelho bem suave para dar contraste
   },
 });
