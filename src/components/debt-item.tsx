@@ -1,6 +1,7 @@
 import { Debt } from "@/entities/debt";
 import { Host, Icon } from "@expo/ui";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { trashIcon } from "./icons";
 import { Modal } from "./ui/modal";
 
@@ -41,17 +42,7 @@ export function DebtItem({
         </View>
 
         <View style={styles.headerRightActions}>
-          {/* Botão de Lixeira */}
-          <Modal
-            title="Confirmação de exclusão"
-            description={`Você deseja excluir ${name}?`}
-            onConfirm={onDelete}
-            variant="deleteButton"
-          >
-            <Host matchContents>
-              <Icon name={trashIcon} size={16 * 1.4} color="#EF4444" />
-            </Host>
-          </Modal>
+          <DeleteAction onDelete={onDelete} debtName={name} />
         </View>
       </View>
 
@@ -74,6 +65,43 @@ export function DebtItem({
         </View>
       </View>
     </View>
+  );
+}
+
+interface DeleteActionProps {
+  onDelete: () => void;
+  debtName: string;
+}
+
+function DeleteAction({ onDelete, debtName }: DeleteActionProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Modal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Confirmação de exclusão"
+        description={`Você deseja excluir ${debtName}?`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        onConfirm={onDelete}
+      />
+
+      <Pressable
+        onPress={() => setIsOpen(true)}
+        style={({ pressed }) => [
+          styles.deleteButton,
+          pressed && { opacity: 0.6 },
+        ]}
+        // Aumenta a área de toque
+        hitSlop={16}
+      >
+        <Host matchContents>
+          <Icon name={trashIcon} size={16 * 1.4} color="#EF4444" />
+        </Host>
+      </Pressable>
+    </>
   );
 }
 
@@ -153,5 +181,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8, // Espaçamento entre a badge e o ícone de lixeira
+  },
+  deleteButton: {
+    padding: 4,
+    borderRadius: 6,
+    backgroundColor: "#FEF2F2", // Fundo vermelho bem suave para dar contraste
   },
 });
