@@ -21,7 +21,7 @@ export function DebtItem({
 }: DebtItemProps) {
   const interestPercentage = interest
     ? (interest * 100).toFixed(2) + "%"
-    : "Vazio";
+    : null;
   const formattedTotalValue = `R$ ${totalValue.toFixed(2)}`;
 
   return (
@@ -33,9 +33,11 @@ export function DebtItem({
             {name}
           </Text>
 
-          <View style={styles.categoryBadge}>
-            <Text style={styles.categoryText}>{category}</Text>
-          </View>
+          {category && (
+            <View style={styles.categoryBadge}>
+              <Text style={styles.categoryText}>{category}</Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.headerRightActions}>
@@ -60,7 +62,11 @@ export function DebtItem({
       <View style={styles.cardFooter}>
         <View>
           <Text style={styles.label}>Taxa de Juros</Text>
-          <Text style={styles.valuePrimary}>{interestPercentage}</Text>
+          {interestPercentage ? (
+            <Text style={styles.valuePrimary}>{interestPercentage}</Text>
+          ) : (
+            <Text style={styles.valueEmpty}>Vazio</Text>
+          )}
         </View>
         <View style={{ alignItems: "flex-end" }}>
           <Text style={styles.label}>Valor Total</Text>
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
   headerLeftInfo: {
     flexDirection: "column",
     gap: 4,
-    alignItems: "flex-start"
+    alignItems: "flex-start",
   },
   debtName: {
     fontSize: 16,
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
     color: "#1E293B",
     flex: 1,
     marginRight: 8,
-    marginLeft: 4
+    marginLeft: 4,
   },
   categoryBadge: {
     backgroundColor: "#EFF6FF",
@@ -137,6 +143,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#475569",
+  },
+  valueEmpty: {
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#94A3B8",
   },
   headerRightActions: {
     flexDirection: "row",
