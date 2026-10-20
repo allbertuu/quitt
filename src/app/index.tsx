@@ -1,7 +1,7 @@
 import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
 import { DebtsList } from "@/components/debts-list";
 import { Button } from "@/components/ui/button";
-import {  Column, Host, Row, Spacer, Text } from "@expo/ui";
+import { Column, Host, Row, Spacer, Text } from "@expo/ui";
 import { StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -24,7 +24,7 @@ export default function Home() {
           matchContents={{ vertical: true }}
           style={styles.actionsViewContainer}
         >
-          <Row alignment="center" style={styles.actionsContainer}>
+          <Row style={styles.actionsContainer}>
             <AddDebtBottomSheet />
             <Spacer flexible />
             <Button label="Filtros" disabled />
