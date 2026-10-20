@@ -36,7 +36,7 @@ export function DebtsList() {
           onDelete={() => deleteDebtMutation.mutate(debt.id)}
         />
       )}
-      keyExtractor={(debt) => debt.name}
+      keyExtractor={(debt) => String(debt.id)}
       contentContainerStyle={styles.listContainer}
       ListEmptyComponent={<EmptyMessageCard />}
       onRefresh={() => {
