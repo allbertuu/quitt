@@ -8,9 +8,19 @@ import { ErrorMessageCard } from "./error-message-card";
 export function DebtsList() {
   const mockDebtsUseCase = new MockDebtsUseCase();
   // const supabaseDebtsUseCase = new SupabaseDebtsUseCase();
-  const { debts, isPending, error, deleteDebtMutation, refetch } = useDebts({
+  const {
+    debts,
+    isPending,
+    error,
+    deleteDebtMutation,
+    createDebtMutation,
+    refetch,
+  } = useDebts({
     debtsUseCase: mockDebtsUseCase,
   });
+
+  const isMutating =
+    deleteDebtMutation.isPending || createDebtMutation.isPending;
 
   if (isPending) {
     return (
@@ -34,6 +44,7 @@ export function DebtsList() {
           interest={debt.interest}
           totalValue={debt.total_value}
           onDelete={() => deleteDebtMutation.mutate(debt.id)}
+          isRefreshing={isMutating}
         />
       )}
       keyExtractor={(debt) => String(debt.id)}
@@ -42,7 +53,7 @@ export function DebtsList() {
       onRefresh={() => {
         refetch();
       }}
-      refreshing={deleteDebtMutation.isPending}
+      refreshing={isMutating}
       extraData={debts}
     />
   );

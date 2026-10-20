@@ -11,6 +11,7 @@ type DebtItemProps = {
   interest: Debt["interest"];
   totalValue: Debt["total_value"];
   onDelete: () => void;
+  isRefreshing: boolean;
 };
 
 export function DebtItem({
@@ -19,6 +20,7 @@ export function DebtItem({
   interest,
   totalValue,
   onDelete,
+  isRefreshing,
 }: DebtItemProps) {
   const interestPercentage = interest
     ? (interest * 100).toFixed(2) + "%"
@@ -26,7 +28,10 @@ export function DebtItem({
   const formattedTotalValue = `R$ ${totalValue.toFixed(2)}`;
 
   return (
-    <View style={styles.debtCard}>
+    <View
+      style={[styles.debtCard, { opacity: isRefreshing ? 0.6 : 1 }]}
+      pointerEvents={isRefreshing ? "none" : "auto"}
+    >
       {/* Cabeçalho do Card: Nome e Categoria em estilo Badge */}
       <View style={styles.cardHeader}>
         <View style={styles.headerLeftInfo}>
