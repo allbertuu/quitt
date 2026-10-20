@@ -1,6 +1,3 @@
-/**
- * Dados modelados com base na tabela de dívidas do Supabase.
- */
 export interface Debt {
   // obrigatório, auto-gerado
   id: number;
