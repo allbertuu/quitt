@@ -1,5 +1,5 @@
 import { Debt } from "@/entities/debt";
-import { DebtsUseCase } from "@/usecases/debts-use-case";
+import { CreateDebtParam, DebtsUseCase } from "@/usecases/debts-use-case";
 
 export let DEBTS: Debt[] = [
   {
@@ -47,12 +47,24 @@ export class MockDebtsUseCase implements DebtsUseCase {
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log(
-          "Você excluiu:",
+          "Você excluiu no backend falso:",
           DEBTS.find((debt) => debt.id === id),
         );
         const debtsUpdated = DEBTS.filter((debt) => debt.id !== id);
         DEBTS = debtsUpdated;
         resolve();
+      }, 2000);
+    });
+  }
+
+  createDebt(debt: CreateDebtParam): Promise<void> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const createdDebt = { id: DEBTS.length + 1, ...debt };
+        DEBTS.push(createdDebt);
+        console.log("Você criou no backend falso:", createdDebt);
+        resolve();
+        // reject(new Error("Erro ao carregar dados da API"));
       }, 2000);
     });
   }
