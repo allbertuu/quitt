@@ -1,4 +1,6 @@
 import { Debt } from "@/entities/debt";
+import { formatCurrency } from "@/utils/format-currency";
+import { formatPercentage } from "@/utils/format-percentage";
 import { Host, Icon } from "@expo/ui";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -22,10 +24,8 @@ export function DebtItem({
   onDelete,
   isRefreshing,
 }: DebtItemProps) {
-  const interestPercentage = interest
-    ? (interest * 100).toFixed(2) + "%"
-    : null;
-  const formattedTotalValue = `R$ ${totalValue.toFixed(2)}`;
+  const interestPercentage = formatPercentage(String(interest));
+  const formattedTotalValue = formatCurrency(totalValue);
 
   return (
     <View
