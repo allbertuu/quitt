@@ -1,4 +1,3 @@
-import { ZodAddDebtSchema } from "@/schemas/add-debt-form-schema/zod-add-debt-form-schema";
 import { BottomSheet } from "@expo/ui";
 import { useState } from "react";
 import { AddDebtForm } from "./add-debt-form";
@@ -6,15 +5,6 @@ import { Button } from "./ui/button";
 
 export function AddDebtBottomSheet() {
   const [isPresented, setIsPresented] = useState(false);
-  const [submissionErrorMessage, setSubmissionErrorMessage] = useState<
-    string | null
-  >(null);
-
-  function handleSubmitForm(data: ZodAddDebtSchema) {
-    console.log("Enviado:", data);
-    // setIsPresented(false);
-    setSubmissionErrorMessage("Já existe usuário com esse nome");
-  }
 
   return (
     <>
@@ -26,8 +16,9 @@ export function AddDebtBottomSheet() {
         contentPadding={{ bottom: 16, left: 16, right: 16 }}
       >
         <AddDebtForm
-          submissionErrorMessage={submissionErrorMessage}
-          onSubmit={(data) => handleSubmitForm(data)}
+          onSuccess={() => {
+            setIsPresented(false);
+          }}
         />
       </BottomSheet>
     </>
