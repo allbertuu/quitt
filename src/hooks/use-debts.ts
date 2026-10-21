@@ -10,17 +10,22 @@ interface UseDebtsProps {
 export function useDebts({ debtsUseCase }: UseDebtsProps) {
   const queryClient = useQueryClient();
 
-  // Buscar os dados
   const debtsQuery = useQuery({
     queryKey: ["debts"],
     queryFn: debtsUseCase.getAllDebts,
   });
 
-  // Ação de deletar (e atualizar a lista automaticamente)
   const deleteDebtMutation = useMutation({
     mutationFn: debtsUseCase.deleteDebt,
     onSuccess: () => {
       // Invalida o cache, forçando o React Query a buscar a lista nova imediatamente
+      queryClient.invalidateQueries({ queryKey: ["debts"] });
+    },
+  });
+
+  const createDebtMutation = useMutation({
+    mutationFn: debtsUseCase.createDebt,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["debts"] });
     },
   });
@@ -30,6 +35,7 @@ export function useDebts({ debtsUseCase }: UseDebtsProps) {
     isPending: debtsQuery.isPending,
     error: debtsQuery.error?.message ?? null,
     deleteDebtMutation,
+    createDebtMutation,
     refetch: debtsQuery.refetch,
   };
 }
