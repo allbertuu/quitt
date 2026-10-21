@@ -7,11 +7,17 @@ import {
 import { StyleSheet } from "react-native";
 
 type TextInputProps = ExpoUITextInputProps & {
-  errorMessage?: string;
   label: string;
+  errorMessage?: string;
+  helperText?: string;
 };
 
-export function TextInput({ errorMessage, label, ...rest }: TextInputProps) {
+export function TextInput({
+  errorMessage,
+  label,
+  helperText,
+  ...rest
+}: TextInputProps) {
   return (
     <Column spacing={4}>
       <Text textStyle={{ color: "#141414" }}>{label}</Text>
@@ -22,6 +28,8 @@ export function TextInput({ errorMessage, label, ...rest }: TextInputProps) {
         style={{ ...styles.textInput, ...rest.style }}
         textStyle={{ color: "#000" }}
       />
+
+      {helperText && <Text textStyle={{ color: "#afafaf" }}>{helperText}</Text>}
 
       <Text textStyle={{ color: "#8b2525" }}>{errorMessage}</Text>
     </Column>
