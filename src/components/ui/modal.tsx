@@ -52,38 +52,52 @@ export function Modal({
     >
       {/* Backdrop com escurecimento suave */}
       <View style={styles.centeredView}>
-        <View style={styles.modalCard}>
+        <View
+          className="bg-background dark:bg-neutral-800 border border-gray-300 dark:border-neutral-900"
+          style={{
+            ...styles.modalCard,
+          }}
+        >
           {/* Modal Header */}
           {title && (
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>{title}</Text>
+            <View className="mb-2">
+              <Text className="text-foreground dark:text-white/80 text-lg font-bold">{title}</Text>
             </View>
           )}
 
           {/* Modal Content */}
           {description && (
-            <View style={styles.modalBody}>
-              <Text style={styles.modalDescription}>{description}</Text>
+            <View className="mb-6">
+              <Text className="text-foreground dark:text-white/80 text-base">{description}</Text>
             </View>
           )}
 
           {/* Modal Actions */}
-          <View style={styles.modalFooter}>
+          <View className="flex flex-row gap-2">
             {cancelText && (
               <Pressable
-                style={[styles.button, styles.buttonCancel]}
+                className="bg-secondary"
+                style={[styles.button]}
                 onPress={handleCancel}
               >
-                <Text style={styles.cancelButtonText}>{cancelText}</Text>
+                <Text
+                  className="text-secondary-foreground text-base"
+                  style={styles.cancelButtonText}
+                >
+                  {cancelText}
+                </Text>
               </Pressable>
             )}
 
             {confirmText && (
               <Pressable
-                style={[styles.button, styles.buttonConfirm]}
+                className="bg-destructive"
+                style={[styles.button]}
                 onPress={handleConfirm}
               >
-                <Text style={styles.confirmButtonText}>{confirmText}</Text>
+                <Text className="text-destructive-foreground text-base">
+                  {confirmText}
+                </Text>
               </Pressable>
             )}
           </View>
@@ -98,12 +112,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(15, 23, 42, 0.4)", // Fundo escurecido e translúcido moderno
+    backgroundColor: "#05050570", // Fundo escurecido e translúcido moderno
   },
   modalCard: {
     width: "85%",
     maxWidth: 380,
-    backgroundColor: "#FFFFFF",
     borderRadius: 20, // Bordas bem arredondadas
     padding: 24,
     // Sombra suave e elegante
@@ -116,22 +129,15 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10,
     borderWidth: 1,
-    borderColor: "#F1F5F9", // Borda sutil minimalista
   },
-  modalHeader: {
-    marginBottom: 8,
-  },
+
   modalTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0F172A",
   },
-  modalBody: {
-    marginBottom: 24,
-  },
+
   modalDescription: {
     fontSize: 14,
-    color: "#64748B",
     lineHeight: 20,
   },
   modalFooter: {

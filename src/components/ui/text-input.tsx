@@ -1,12 +1,12 @@
 import {
-  Column,
-  TextInput as ExpoUITextInput,
-  TextInputProps as ExpoUITextInputProps,
+  TextInput as RNTextInput,
+  TextInputProps as RNTextInputProps,
   Text,
-} from "@expo/ui";
-import { StyleSheet } from "react-native";
+  View,
+} from "react-native";
+import colors from "tailwindcss/colors";
 
-type TextInputProps = ExpoUITextInputProps & {
+type TextInputProps = RNTextInputProps & {
   label: string;
   errorMessage?: string;
   helperText?: string;
@@ -19,29 +19,24 @@ export function TextInput({
   ...rest
 }: TextInputProps) {
   return (
-    <Column spacing={4}>
-      <Text textStyle={{ color: "#141414" }}>{label}</Text>
+    <View className="flex flex-col gap-1">
+      <Text className="text-lg text-foreground dark:text-white/80">
+        {label}
+      </Text>
 
-      <ExpoUITextInput
+      <RNTextInput
         {...rest}
-        placeholderTextColor="#999898"
-        style={{ ...styles.textInput, ...rest.style }}
-        textStyle={{ color: "#000" }}
+        placeholderTextColor={colors.gray[400]}
+        className="bg-input dark:bg-foreground text-foreground dark:text-white/80 p-4 border border-gray-400 rounded-lg"
       />
 
-      {helperText && <Text textStyle={{ color: "#afafaf" }}>{helperText}</Text>}
+      {helperText && (
+        <Text className="text-muted-foreground dark:text-white/60">
+          {helperText}
+        </Text>
+      )}
 
-      <Text textStyle={{ color: "#8b2525" }}>{errorMessage}</Text>
-    </Column>
+      <Text className="text-destructive">{errorMessage}</Text>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  textInput: {
-    padding: 16,
-    borderRadius: 16,
-    backgroundColor: "#ffffff",
-    borderWidth: 1,
-    borderColor: "#dddddd",
-  },
-});

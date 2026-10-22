@@ -2,8 +2,8 @@ import {
   Column,
   Picker as ExpoUIPicker,
   PickerProps as ExpoUIPickerProps,
-  Text,
 } from "@expo/ui";
+import { Text } from "react-native";
 
 interface Option {
   label: string;
@@ -19,7 +19,9 @@ type PickerProps = ExpoUIPickerProps & {
 export function Picker({ errorMessage, label, options, ...rest }: PickerProps) {
   return (
     <Column spacing={4}>
-      <Text textStyle={{ color: "#141414" }}>{label}</Text>
+      <Text className="text-foreground dark:text-white/80 text-lg">
+        {label}
+      </Text>
 
       <ExpoUIPicker {...rest}>
         {options.map((category) => (
@@ -31,7 +33,7 @@ export function Picker({ errorMessage, label, options, ...rest }: PickerProps) {
         ))}
       </ExpoUIPicker>
 
-      <Text textStyle={{ color: "#8b2525" }}>{errorMessage}</Text>
+      <Text className="text-destructive">{errorMessage}</Text>
     </Column>
   );
 }

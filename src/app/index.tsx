@@ -1,69 +1,43 @@
-import { AddDebtBottomSheet } from "@/components/add-debt-bottom-sheet";
+import { AddDebtButton } from "@/components/add-debt-button";
 import { DebtsList } from "@/components/debts-list";
-import { Button } from "@/components/ui/button";
-import { Column, Host, Row, Spacer, Text } from "@expo/ui";
-import { StatusBar, StyleSheet } from "react-native";
+import { DebtsNumber } from "@/components/debts-number";
+import { formatCurrency } from "@/utils/format-currency";
+import { StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView className="flex-1 bg-background dark:bg-foreground">
         <StatusBar animated={true} barStyle="dark-content" />
-        {/* Cabeçalho da Tela */}
-        <Host matchContents style={styles.headerViewContainer}>
-          <Column spacing={16 * 0.3} style={styles.headerContainer}>
-            <Text textStyle={styles.screenTitle}>Minhas Dívidas</Text>
-            <Text textStyle={styles.screenSubtitle}>
-              Acompanhe seus compromissos financeiros
-            </Text>
-          </Column>
-        </Host>
 
-        <Host
-          matchContents={{ vertical: true }}
-          style={styles.actionsViewContainer}
-        >
-          <Row style={styles.actionsContainer}>
-            <AddDebtBottomSheet />
-            <Spacer flexible />
-            <Button label="Filtros" disabled />
-          </Row>
-        </Host>
+        <View className="mb-6 px-8">
+          <Text className="text-base text-muted-foreground dark:text-white/60">
+            Total em dívidas
+          </Text>
+
+          <Text className="text-3xl text-foreground dark:text-white/80 font-bold my-2">
+            {formatCurrency(18450.05)}
+          </Text>
+
+          <Text className="text-lg text-muted-foreground dark:text-white/80">
+            Acompanhe tudo em um só lugar
+          </Text>
+        </View>
+
+        <View className="flex flex-row justify-between px-8 mb-2">
+          <Text className="text-lg font-bold text-foreground dark:text-white/80">
+            Suas dívidas
+          </Text>
+
+          <DebtsNumber />
+        </View>
 
         <DebtsList />
+
+        <AddDebtButton />
       </SafeAreaView>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F8FAFC", // Fundo leve e moderno
-  },
-  headerContainer: {
-    paddingHorizontal: 20,
-  },
-  headerViewContainer: {
-    marginBottom: 16,
-  },
-  actionsViewContainer: {
-    marginBottom: 16,
-  },
-  actionsContainer: {
-    paddingHorizontal: 20,
-  },
-  screenTitle: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: "#0F172A",
-  },
-  screenSubtitle: {
-    fontSize: 14,
-    color: "#64748B",
-    marginTop: 4,
-  },
-});
-
 
