@@ -19,3 +19,8 @@ export const errorIcon = Icon.select({
   ios: "warninglight.fill",
   android: import("@expo/material-symbols/error.xml"),
 });
+
+export const addIcon = Icon.select({
+  ios: "plus.circle.fill",
+  android: import("@expo/material-symbols/add.xml"),
+});
