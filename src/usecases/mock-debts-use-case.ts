@@ -13,7 +13,7 @@ export let DEBTS: Debt[] = [
     id: 1,
     name: "Cartão Inter",
     category: null,
-    interest: 0.179,
+    interest: 17.9,
     total_value: 3497.09,
   },
   {
@@ -27,14 +27,14 @@ export let DEBTS: Debt[] = [
     id: 3,
     name: "Empréstimo Mercado Livre",
     category: "Empréstimo pessoal",
-    interest: 0.01,
+    interest: 1,
     total_value: 12.99,
   },
 ];
 
 export class MockDebtsUseCase implements DebtsUseCase {
   getAllDebts(): Promise<Debt[]> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         // reject(new Error("Erro ao carregar dados da API"));
         resolve(DEBTS);
