@@ -31,7 +31,7 @@ export function DebtsList() {
   }
 
   if (error) {
-    return <ErrorMessageCard>{error}</ErrorMessageCard>;
+    return <ErrorMessageCard onTryAgain={refetch}>{error}</ErrorMessageCard>;
   }
 
   return (
