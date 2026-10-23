@@ -1,6 +1,6 @@
+import { errorIcon } from "@/components/icons";
 import { Host, Icon } from "@expo/ui";
 import { Pressable, Text, View } from "react-native";
-import { errorIcon } from "./icons";
 
 export function ErrorMessageCard({
   children,

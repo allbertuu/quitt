@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const zodAddDebtSchema = z.object({
+export const zodAddDebtFormSchema = z.object({
   name: z
     .string({ message: "Campo obrigatório" })
     .min(3, "Defina um nome de, no mínimo, 3 caracteres")
@@ -21,4 +21,4 @@ export const zodAddDebtSchema = z.object({
     ),
 });
 
-export type ZodAddDebtSchema = z.infer<typeof zodAddDebtSchema>;
+export type ZodAddDebtFormSchema = z.infer<typeof zodAddDebtFormSchema>;

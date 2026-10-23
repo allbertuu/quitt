@@ -1,17 +1,16 @@
-import { Debt } from "@/entities/debt";
+import { trashIcon } from "@/components/icons";
+import { Modal } from "@/components/ui/modal";
 import { formatCurrency } from "@/utils/format-currency";
 import { formatPercentage } from "@/utils/format-percentage";
 import { Host, Icon } from "@expo/ui";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { trashIcon } from "./icons";
-import { Modal } from "./ui/modal";
 
 type DebtItemProps = {
-  name: Debt["name"];
-  category: Debt["category"];
-  interest: Debt["interest"];
-  totalValue: Debt["total_value"];
+  name: string;
+  category: string | null;
+  interest: number | null;
+  totalValue: number;
   onDelete: () => void;
   isRefreshing: boolean;
 };

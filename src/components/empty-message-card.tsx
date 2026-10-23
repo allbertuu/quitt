@@ -1,6 +1,6 @@
+import { trophyIcon } from "@/components/icons";
 import { Host, Icon } from "@expo/ui";
 import { Text, View } from "react-native";
-import { trophyIcon } from "./icons";
 
 export function EmptyMessageCard() {
   return (

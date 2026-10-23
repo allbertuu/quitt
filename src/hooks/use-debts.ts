@@ -1,14 +1,16 @@
-import { DebtsUseCase } from "@/usecases/debts-use-case";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@/infra/react-query/hooks";
+import { SupabaseDebtsUseCase } from "@/infra/supabase/debts-use-case";
 
-interface UseDebtsProps {
-  debtsUseCase: DebtsUseCase;
-}
 /**
  * Controla o fluxo de renderização e sincronização dos dados externos
  */
-export function useDebts({ debtsUseCase }: UseDebtsProps) {
+export function useDebts() {
   const queryClient = useQueryClient();
+  const debtsUseCase = new SupabaseDebtsUseCase();
 
   const debtsQuery = useQuery({
     queryKey: ["debts"],

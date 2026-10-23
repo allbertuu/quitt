@@ -1,6 +1,6 @@
 import { Debt } from "@/entities/debt";
-import { supabase } from "@/infra/supabase-client";
 import { CreateDebtParam, DebtsUseCase } from "@/usecases/debts-use-case";
+import { supabase } from "./client";
 
 export class SupabaseDebtsUseCase implements DebtsUseCase {
   async getAllDebts(): Promise<Debt[]> {

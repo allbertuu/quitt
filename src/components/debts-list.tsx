@@ -1,13 +1,10 @@
 import { DebtItem } from "@/components/debt-item";
+import { EmptyMessageCard } from "@/components/empty-message-card";
+import { ErrorMessageCard } from "@/components/error-message-card";
 import { useDebts } from "@/hooks/use-debts";
-import { MockDebtsUseCase } from "@/usecases/mock-debts-use-case";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { EmptyMessageCard } from "./empty-message-card";
-import { ErrorMessageCard } from "./error-message-card";
 
 export function DebtsList() {
-  const mockDebtsUseCase = new MockDebtsUseCase();
-  // const supabaseDebtsUseCase = new SupabaseDebtsUseCase();
   const {
     debts,
     isPending,
@@ -15,9 +12,7 @@ export function DebtsList() {
     deleteDebtMutation,
     createDebtMutation,
     refetch,
-  } = useDebts({
-    debtsUseCase: mockDebtsUseCase,
-  });
+  } = useDebts();
 
   const isMutating =
     deleteDebtMutation.isPending || createDebtMutation.isPending;
