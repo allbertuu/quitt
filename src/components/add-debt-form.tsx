@@ -1,7 +1,6 @@
 import { Picker } from "@/components/ui/picker";
 import { TextInput } from "@/components/ui/text-input";
 import { useDebts } from "@/hooks/use-debts";
-import { Controller, useForm } from "@/infra/react-hook-form";
 import {
   zodAddDebtFormSchema,
   ZodAddDebtFormSchema,
@@ -9,6 +8,7 @@ import {
 import { zodResolver } from "@/schemas/zod/resolver";
 import { Button, Column, Row } from "@expo/ui";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { Modal } from "./ui/modal";
 
 interface AddDebtFormProps {
