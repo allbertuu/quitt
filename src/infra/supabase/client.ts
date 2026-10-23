@@ -1,5 +1,5 @@
-// import "expo-sqlite/localStorage/install";
 import { createClient } from "@supabase/supabase-js";
+import "expo-sqlite/localStorage/install";
 import { AppState } from "react-native";
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
@@ -20,7 +20,7 @@ export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
      * permite persistir a sessão do usuário no armazenamento local do dispositivo,
      * mesmo após o aplicativo ser fechado ou reiniciado
      */
-    // storage: localStorage,
+    storage: localStorage,
     autoRefreshToken: true,
     persistSession: true,
     // "false" porquê Android e iOS não tem uma URL para ler a sessão
