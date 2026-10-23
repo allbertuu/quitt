@@ -1,6 +1,5 @@
 import { AddDebtButton } from "@/components/add-debt-button";
 import { DebtsList } from "@/components/debts-list";
-import { DebtsNumber } from "@/components/debts-number";
 import { formatCurrency } from "@/utils/format-currency";
 import { StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -30,7 +29,9 @@ export default function Home() {
             Suas dívidas
           </Text>
 
-          <DebtsNumber />
+          <Text className="text-muted-foreground text-base dark:text-white/60">
+            4 registros
+          </Text>
         </View>
 
         <DebtsList />
@@ -40,4 +41,3 @@ export default function Home() {
     </>
   );
 }
-
