@@ -1,16 +1,15 @@
 import { BottomSheet } from "@expo/ui";
-import { AddDebtForm } from "./add-debt-form";
 
 interface AddDebtBottomSheetProps {
   open: boolean;
   onClose: () => void;
-  onSubmitSuccess: () => void;
+  children: React.ReactNode;
 }
 
 export function AddDebtBottomSheet({
   open,
   onClose,
-  onSubmitSuccess,
+  children,
 }: AddDebtBottomSheetProps) {
   return (
     <BottomSheet
@@ -18,7 +17,7 @@ export function AddDebtBottomSheet({
       onDismiss={onClose}
       contentPadding={{ bottom: 16, left: 16, right: 16 }}
     >
-      <AddDebtForm onSuccess={onSubmitSuccess} />
+      {children}
     </BottomSheet>
   );
 }

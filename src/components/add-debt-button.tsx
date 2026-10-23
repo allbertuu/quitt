@@ -3,15 +3,16 @@ import { addIcon } from "@/components/icons";
 import { Host, Icon } from "@expo/ui";
 import { useState } from "react";
 import { Pressable, View } from "react-native";
+import { AddDebtForm } from "./add-debt-form";
 
 export function AddDebtButton() {
-  const [open, setOpen] = useState(false);
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
 
   return (
     <>
       <View className="absolute bottom-safe-or-20 right-safe-or-3">
         <Pressable
-          onPress={() => setOpen(true)}
+          onPress={() => setBottomSheetOpen(true)}
           className="p-4 bg-accent rounded-full"
         >
           <Host matchContents>
@@ -21,10 +22,11 @@ export function AddDebtButton() {
       </View>
 
       <AddDebtBottomSheet
-        open={open}
-        onClose={() => setOpen(false)}
-        onSubmitSuccess={() => setOpen(false)}
-      />
+        open={bottomSheetOpen}
+        onClose={() => setBottomSheetOpen(false)}
+      >
+        <AddDebtForm onSuccess={() => setBottomSheetOpen(false)} />
+      </AddDebtBottomSheet>
     </>
   );
 }
