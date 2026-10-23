@@ -9,13 +9,13 @@ export default function Home() {
     <SafeAreaView className="flex-1 bg-background dark:bg-foreground">
       <StatusBar animated={true} barStyle="dark-content" />
 
-      <View className="mb-6 px-8">
+      <View className="mb-6 mt-12 px-8">
         <Text className="text-base text-muted-foreground dark:text-white/60">
           Total em dívidas
         </Text>
 
         <Text className="text-3xl text-foreground dark:text-white/80 font-bold my-2">
-          {formatCurrency(18450.05)}
+          {formatCurrency(5186.51)}
         </Text>
 
         <Text className="text-lg text-muted-foreground dark:text-white/80">

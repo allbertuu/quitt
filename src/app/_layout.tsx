@@ -5,7 +5,14 @@ import "../theme/globals.css";
 export default function RootLayout() {
   return (
     <QueryClientProvider>
-      <Stack />
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
     </QueryClientProvider>
   );
 }
