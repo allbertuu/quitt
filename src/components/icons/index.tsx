@@ -24,3 +24,8 @@ export const addIcon = Icon.select({
   ios: "plus.circle.fill",
   android: import("@expo/material-symbols/add.xml"),
 });
+
+export const sortIcon = Icon.select({
+  ios: "arrow.down",
+  android: import("@expo/material-symbols/sort.xml"),
+});
