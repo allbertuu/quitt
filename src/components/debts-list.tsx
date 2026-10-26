@@ -50,6 +50,7 @@ export function DebtsList() {
       }}
       refreshing={isMutating}
       extraData={debts}
+      initialNumToRender={6}
     />
   );
 }
