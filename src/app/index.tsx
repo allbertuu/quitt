@@ -6,10 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   return (
-    <SafeAreaView className="flex-1 bg-background dark:bg-foreground">
+    <SafeAreaView className="flex-1 bg-background dark:bg-foreground px-8">
       <StatusBar animated={true} barStyle="dark-content" />
 
-      <View className="mb-6 mt-12 px-8">
+      <View className="mb-6 mt-12">
         <Text className="text-base text-muted-foreground dark:text-white/60">
           Total em dívidas
         </Text>
@@ -20,16 +20,6 @@ export default function Home() {
 
         <Text className="text-lg text-muted-foreground dark:text-white/80">
           Acompanhe tudo em um só lugar
-        </Text>
-      </View>
-
-      <View className="flex flex-row justify-between px-8 mb-2">
-        <Text className="text-lg font-bold text-foreground dark:text-white/80">
-          Suas dívidas
-        </Text>
-
-        <Text className="text-muted-foreground text-base dark:text-white/60">
-          4 registros
         </Text>
       </View>
 
