@@ -28,7 +28,7 @@ export function DebtItem({
 
   return (
     <View
-      className="bg-card dark:bg-neutral-800 border border-gray-300 dark:border-gray-950 rounded-3xl p-6 mb-4"
+      className="bg-card dark:bg-neutral-800 border border-gray-300 dark:border-gray-950 rounded-3xl py-4 px-6 mb-4"
       style={{
         opacity: isRefreshing ? 0.6 : 1,
       }}
