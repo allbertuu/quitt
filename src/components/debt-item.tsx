@@ -84,7 +84,7 @@ function DeleteAction({ onDelete, debtName }: DeleteActionProps) {
         open={isOpen}
         onClose={() => setIsOpen(false)}
         title="Confirmação de exclusão"
-        description={`Você deseja excluir ${debtName}?`}
+        description={`Você deseja excluir "${debtName}"?`}
         confirmText="Excluir"
         cancelText="Cancelar"
         onConfirm={onDelete}
