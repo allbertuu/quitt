@@ -16,6 +16,7 @@ export function AddDebtBottomSheet({
       isPresented={open}
       onDismiss={onClose}
       contentPadding={{ bottom: 16, left: 16, right: 16 }}
+      snapPoints={["full"]}
     >
       {children}
     </BottomSheet>
