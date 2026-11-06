@@ -1,15 +1,15 @@
 import { Picker } from "@/components/ui/picker";
 import { TextInput } from "@/components/ui/text-input";
-import { useDebts } from "@/hooks/use-debts";
+import { useUserDebts } from "@/hooks/use-user-debts";
 import {
   zodAddDebtFormSchema,
   ZodAddDebtFormSchema,
-} from "@/schemas/zod/add-debt-form-schema";
-import { zodResolver } from "@/schemas/zod/resolver";
+} from "@/infra/zod/add-debt-form-schema";
+import { zodResolver } from "@/infra/zod/resolver";
 import { Button, Column, Row } from "@expo/ui";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Modal } from "./ui/modal";
+import { ErrorModal } from "./ui/error-modal";
 
 interface AddDebtFormProps {
   onSuccess: () => void;
@@ -23,8 +23,8 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
   } = useForm<ZodAddDebtFormSchema>({
     resolver: zodResolver(zodAddDebtFormSchema),
   });
-  const { createDebtMutation } = useDebts();
-  const [openErrorModal, setOpenErrorModal] = useState(false);
+  const { createDebtMutation } = useUserDebts();
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const CATEGORIES = [
     { label: "Cartão de Crédito", value: "Cartão de Crédito" },
@@ -42,11 +42,9 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
         total_value: Number(data.totalValue),
       },
       {
-        onSuccess: () => {
-          onSuccess();
-        },
+        onSuccess: onSuccess,
         onError: () => {
-          setOpenErrorModal(true);
+          setIsErrorModalOpen(true);
         },
       },
     );
@@ -132,12 +130,10 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
         </Row>
       </Column>
 
-      <Modal
-        title="Mensagem de erro"
-        description={apiError?.message}
-        cancelText="Ok"
-        open={openErrorModal}
-        onClose={() => setOpenErrorModal(false)}
+      <ErrorModal
+        errorMessage={apiError?.message}
+        open={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
       />
     </>
   );
