@@ -29,3 +29,8 @@ export const sortIcon = Icon.select({
   ios: "arrow.down",
   android: import("@expo/material-symbols/sort.xml"),
 });
+
+export const moreIcon = Icon.select({
+  ios: "dots.and.line.vertical.and.pointer.arrow.rectangle",
+  android: import("@expo/material-symbols/more_vert.xml"),
+});
