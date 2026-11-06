@@ -8,22 +8,26 @@ const supabasePublishableKey =
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
-    supabase.auth.startAutoRefresh();
+    supabaseClient.auth.startAutoRefresh();
   } else {
-    supabase.auth.stopAutoRefresh();
+    supabaseClient.auth.stopAutoRefresh();
   }
 });
 
-export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
-  auth: {
-    /**
-     * permite persistir a sessão do usuário no armazenamento local do dispositivo,
-     * mesmo após o aplicativo ser fechado ou reiniciado
-     */
-    storage: localStorage,
-    autoRefreshToken: true,
-    persistSession: true,
-    // "false" porquê Android e iOS não tem uma URL para ler a sessão
-    detectSessionInUrl: false,
+export const supabaseClient = createClient(
+  supabaseUrl,
+  supabasePublishableKey,
+  {
+    auth: {
+      /**
+       * permite persistir a sessão do usuário no armazenamento local do dispositivo,
+       * mesmo após o aplicativo ser fechado ou reiniciado
+       */
+      storage: localStorage,
+      autoRefreshToken: true,
+      persistSession: true,
+      // "false" porquê Android e iOS não tem uma URL para ler a sessão
+      detectSessionInUrl: false,
+    },
   },
-});
+);
