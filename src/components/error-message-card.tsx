@@ -1,6 +1,6 @@
 import { errorIcon } from "@/components/icons";
 import { Host, Icon } from "@expo/ui";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export function ErrorMessageCard({
   children,
@@ -10,24 +10,26 @@ export function ErrorMessageCard({
   onTryAgain: () => void;
 }) {
   return (
-    <View className="mx-8 p-4 flex flex-row gap-4 items-center bg-card dark:bg-neutral-800 border rounded-md border-gray-300 dark:border-gray-950 ">
+    <View className="p-4 w-full flex-row gap-4 items-center bg-card dark:bg-neutral-800 border rounded-md border-gray-300 dark:border-gray-950">
       <Host matchContents>
         <Icon name={errorIcon} size={42} color="#EF4444" />
       </Host>
 
-      <View className="flex flex-1 flex-col gap-2">
-        <Text className="text-foreground dark:text-white/80">
-          Houve o seguinte erro: {children}
+      <View className="flex-1 flex-col">
+        <Text className="text-foreground dark:text-white/80 font-semibold text-lg">
+          Oops!
         </Text>
 
-        <Pressable
-          className="px-3 py-2 bg-accent dark:bg-accent/40 rounded-md"
+        <Text>{children}</Text>
+
+        <TouchableOpacity
+          className="px-3 py-2 bg-accent dark:bg-accent/40 rounded-md mt-2"
           onPress={onTryAgain}
         >
           <Text className="text-accent-foreground dark:text-accent-foreground/80">
             Tentar novamente
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );
