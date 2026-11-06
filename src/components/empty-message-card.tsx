@@ -6,7 +6,7 @@ export function EmptyMessageCard() {
   return (
     <View className="p-4 flex flex-row gap-2 items-center bg-card dark:bg-neutral-800 border rounded-md border-gray-300 dark:border-gray-950 ">
       <Host matchContents>
-        <Icon name={trophyIcon} size={54} color="rgb(138 148 122)" />
+        <Icon name={trophyIcon} size={54} color="#10b981" />
       </Host>
 
       <View className="flex-1">
