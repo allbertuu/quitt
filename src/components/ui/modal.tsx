@@ -1,8 +1,8 @@
 import {
-  Pressable,
   Modal as RNModal,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -61,44 +61,45 @@ export function Modal({
           {/* Modal Header */}
           {title && (
             <View className="mb-2">
-              <Text className="text-foreground dark:text-white/80 text-lg font-bold">{title}</Text>
+              <Text className="text-foreground dark:text-white/80 text-lg font-bold">
+                {title}
+              </Text>
             </View>
           )}
 
           {/* Modal Content */}
           {description && (
             <View className="mb-6">
-              <Text className="text-foreground dark:text-white/80 text-base">{description}</Text>
+              <Text className="text-foreground dark:text-white/80 text-base">
+                {description}
+              </Text>
             </View>
           )}
 
           {/* Modal Actions */}
           <View className="flex flex-row gap-2">
             {cancelText && (
-              <Pressable
+              <TouchableOpacity
                 className="bg-secondary"
                 style={[styles.button]}
                 onPress={handleCancel}
               >
-                <Text
-                  className="text-secondary-foreground text-base"
-                  style={styles.cancelButtonText}
-                >
+                <Text className="text-secondary-foreground text-base font-semibold">
                   {cancelText}
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             )}
 
             {confirmText && (
-              <Pressable
+              <TouchableOpacity
                 className="bg-destructive"
                 style={[styles.button]}
                 onPress={handleConfirm}
               >
-                <Text className="text-destructive-foreground text-base">
+                <Text className="text-destructive-foreground text-base font-semibold">
                   {confirmText}
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -158,11 +159,6 @@ const styles = StyleSheet.create({
   buttonConfirm: {
     backgroundColor: "#3B82F6",
     marginLeft: 6,
-  },
-  cancelButtonText: {
-    color: "#475569",
-    fontWeight: "600",
-    fontSize: 14,
   },
   confirmButtonText: {
     color: "#FFFFFF",
