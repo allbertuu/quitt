@@ -1,4 +1,5 @@
 import { AddDebtButton } from "@/components/add-debt-button";
+import { ProgressHeader } from "@/components/progress-header";
 import { UserDebtsList } from "@/components/user-debts-list";
 import { UserDebtsProvider } from "@/contexts/user-debts";
 import { StatusBar, Text, View } from "react-native";
@@ -18,6 +19,8 @@ export default function Home() {
           Apenas uma <Text className="font-semibold">questão de tempo</Text>.
         </Text>
       </View>
+
+      <ProgressHeader totalPaid={3847} totalInitialDebt={9400} />
 
       <UserDebtsProvider>
         <UserDebtsList />
