@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import {
   Modal as RNModal,
   StyleSheet,
@@ -15,6 +16,7 @@ export interface ModalProps {
   cancelText?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
+  confirmButtonVariant?: "success" | "destructive";
 }
 
 export function Modal({
@@ -26,6 +28,7 @@ export function Modal({
   cancelText,
   onCancel,
   onConfirm,
+  confirmButtonVariant = "destructive",
 }: ModalProps) {
   function handleCancel() {
     if (onCancel) {
@@ -92,11 +95,15 @@ export function Modal({
 
             {confirmText && (
               <TouchableOpacity
-                className="bg-destructive"
+                className={cn(
+                  confirmButtonVariant === "success"
+                    ? "bg-emerald-600"
+                    : "bg-red-600",
+                )}
                 style={[styles.button]}
                 onPress={handleConfirm}
               >
-                <Text className="text-destructive-foreground text-base font-semibold">
+                <Text className="text-white text-base font-semibold">
                   {confirmText}
                 </Text>
               </TouchableOpacity>
