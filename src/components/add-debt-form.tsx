@@ -23,7 +23,7 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
   } = useForm<ZodAddDebtFormSchema>({
     resolver: zodResolver(zodAddDebtFormSchema),
   });
-  const { createDebtMutation } = useUserDebts();
+  const { createDebt } = useUserDebts();
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const CATEGORIES = [
@@ -34,12 +34,13 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
   ];
 
   function handleSubmitForm(data: ZodAddDebtFormSchema) {
-    createDebtMutation.mutate(
+    createDebt.mutate(
       {
         name: data.name,
         category: data.category || null,
         interest: data.interest ? Number(data.interest) : null,
         total_value: Number(data.totalValue),
+        is_paid: false,
       },
       {
         onSuccess: onSuccess,
@@ -50,8 +51,8 @@ export function AddDebtForm({ onSuccess }: AddDebtFormProps) {
     );
   }
 
-  const apiError = createDebtMutation.error;
-  const isPending = createDebtMutation.isPending;
+  const apiError = createDebt.error;
+  const isPending = createDebt.isPending;
 
   return (
     <>

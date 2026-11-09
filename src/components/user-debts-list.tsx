@@ -1,7 +1,7 @@
+import { Debt } from "@/application/ports/debt-repository";
 import { EmptyMessageCard } from "@/components/empty-message-card";
 import { ErrorMessageCard } from "@/components/error-message-card";
 import { UserDebtItem } from "@/components/user-debt-item";
-import { Debt } from "@/domain/debt";
 import { useUserDebts } from "@/hooks/use-user-debts";
 import { Host, Icon } from "@expo/ui";
 import { cn } from "cn";
@@ -19,17 +19,10 @@ import { Button } from "./ui/button";
 type SortableDebtOptions = keyof Pick<Debt, "interest" | "total_value">;
 
 export function UserDebtsList() {
-  const {
-    debts,
-    isPending,
-    error,
-    deleteDebtMutation,
-    createDebtMutation,
-    refetch,
-  } = useUserDebts();
+  const { debts, isPending, error, deleteDebt, createDebt, refetch } =
+    useUserDebts();
 
-  const isMutating =
-    deleteDebtMutation.isPending || createDebtMutation.isPending;
+  const isMutating = deleteDebt.isPending || createDebt.isPending;
 
   const [sortBy, setSortBy] = useState<SortableDebtOptions>("interest");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -129,6 +122,7 @@ export function UserDebtsList() {
             category={debt.category}
             interest={debt.interest}
             totalValue={debt.total_value}
+            isPaid={debt.is_paid}
             isRefreshing={isMutating}
             isFirstItem={index === 0}
           />
