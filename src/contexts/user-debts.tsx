@@ -1,6 +1,4 @@
-import { NewDebtParam } from "@/application/ports/debt-repository-port";
-import { UserDebtsUseCase } from "@/application/user-debts-use-case";
-import { Debt } from "@/domain/debt";
+import { Debt, DebtWithoutId } from "@/application/ports/debt-repository";
 import { MockDebtRepositoryAdapter } from "@/infra/mocks/mock-debt-repository-adapter";
 import {
   QueryObserverResult,
@@ -16,8 +14,8 @@ interface UserDebts {
   debts: Debt[];
   isPending: boolean;
   error: string | null;
-  deleteDebtMutation: UseMutationResult<void, Error, number, unknown>;
-  createDebtMutation: UseMutationResult<void, Error, NewDebtParam, unknown>;
+  deleteDebt: UseMutationResult<void, Error, number, unknown>;
+  createDebt: UseMutationResult<void, Error, DebtWithoutId, unknown>;
   refetch: (
     options?: RefetchOptions,
   ) => Promise<QueryObserverResult<Debt[], Error>>;
@@ -28,15 +26,14 @@ export const UserDebtsContext = createContext({} as UserDebts);
 export function UserDebtsProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
   const debtRepository = new MockDebtRepositoryAdapter();
-  const userDebtsUseCase = new UserDebtsUseCase(debtRepository);
 
   const userDebtsQuery = useQuery({
     queryKey: ["debts"],
-    queryFn: () => userDebtsUseCase.listAllDebts(),
+    queryFn: () => debtRepository.listAll(),
   });
 
   const deleteDebtMutation = useMutation({
-    mutationFn: (id: number) => userDebtsUseCase.deleteDebt(id),
+    mutationFn: (id: number) => debtRepository.deleteById(id),
     onSuccess: () => {
       // Invalida o cache, forçando o React Query a buscar a lista nova imediatamente
       queryClient.invalidateQueries({ queryKey: ["debts"] });
@@ -44,7 +41,7 @@ export function UserDebtsProvider({ children }: { children: React.ReactNode }) {
   });
 
   const createDebtMutation = useMutation({
-    mutationFn: (params: NewDebtParam) => userDebtsUseCase.createDebt(params),
+    mutationFn: (newDebt: DebtWithoutId) => debtRepository.create(newDebt),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["debts"] });
     },
@@ -56,8 +53,8 @@ export function UserDebtsProvider({ children }: { children: React.ReactNode }) {
         debts: userDebtsQuery.data ?? [],
         isPending: userDebtsQuery.isPending,
         error: userDebtsQuery.error?.message ?? null,
-        deleteDebtMutation,
-        createDebtMutation,
+        deleteDebt: deleteDebtMutation,
+        createDebt: createDebtMutation,
         refetch: userDebtsQuery.refetch,
       }}
     >
