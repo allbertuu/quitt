@@ -1,7 +1,7 @@
 import { Modal } from "./modal";
 
 export interface ErrorModalProps {
-  errorMessage?: string;
+  errorMessage?: string | null;
   open: boolean;
   onClose: () => void;
   isPossibleTryAgain?: boolean;
@@ -18,7 +18,7 @@ export function ErrorModal({
   return (
     <Modal
       title="Mensagem de erro"
-      description={errorMessage}
+      description={errorMessage === null ? "" : errorMessage}
       cancelText="Voltar"
       confirmText={isPossibleTryAgain ? "Tentar novamente" : undefined}
       onConfirm={onTryAgain}
