@@ -19,9 +19,17 @@ export interface DebtWithoutId {
   is_paid: boolean;
 }
 
+export interface DebtWithoutIdUpdatePayload {
+  name?: string;
+  category?: DebtCategory;
+  interest?: DebtInterest;
+  total_value?: number;
+  is_paid?: boolean;
+}
+
 export interface DebtRepository {
   listAll: () => Promise<Debt[]>;
   deleteById: (id: DebtId) => Promise<void>;
   create: (payload: DebtWithoutId) => Promise<void>;
-  update: (id: DebtId, payload: DebtWithoutId) => Promise<void>;
+  update: (id: DebtId, payload: DebtWithoutIdUpdatePayload) => Promise<void>;
 }
