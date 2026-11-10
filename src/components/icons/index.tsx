@@ -34,3 +34,8 @@ export const moreIcon = Icon.select({
   ios: "dots.and.line.vertical.and.pointer.arrow.rectangle",
   android: import("@expo/material-symbols/more_vert.xml"),
 });
+
+export const searchOffIcon = Icon.select({
+  ios: "location.circle.fill",
+  android: import("@expo/material-symbols/search_off.xml"),
+});
