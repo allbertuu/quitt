@@ -6,23 +6,14 @@ import { useUserDebts } from "@/hooks/use-user-debts";
 import { Host, Icon } from "@expo/ui";
 import { cn } from "cn";
 import { useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { sortIcon } from "./icons";
 import { Button } from "./ui/button";
 
 type SortableDebtOptions = keyof Pick<Debt, "interest" | "total_value">;
 
 export function UserDebtsList() {
-  const { debts, isPending, error, deleteDebt, createDebt, refetch } =
-    useUserDebts();
-
-  const isMutating = deleteDebt.isPending || createDebt.isPending;
+  const { debts, isPending, error, refetch } = useUserDebts();
 
   const [sortBy, setSortBy] = useState<SortableDebtOptions>("interest");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -53,14 +44,6 @@ export function UserDebtsList() {
       }
     });
   }, [debts, sortBy, sortOrder]);
-
-  if (isPending) {
-    return (
-      <View className="mx-auto pt-16">
-        <ActivityIndicator size="large" color="#23ad99" />
-      </View>
-    );
-  }
 
   if (error) {
     return <ErrorMessageCard onTryAgain={refetch}>{error}</ErrorMessageCard>;
@@ -123,7 +106,7 @@ export function UserDebtsList() {
             interest={debt.interest}
             totalValue={debt.total_value}
             isPaid={debt.is_paid}
-            isRefreshing={isMutating}
+            isRefreshing={isPending}
             isFirstItem={index === 0}
           />
         )}
@@ -133,8 +116,7 @@ export function UserDebtsList() {
         onRefresh={() => {
           refetch();
         }}
-        refreshing={isMutating}
-        extraData={debts}
+        refreshing={isPending}
         initialNumToRender={6}
       />
     </>
