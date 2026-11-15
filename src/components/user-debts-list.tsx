@@ -24,19 +24,23 @@ export function UserDebtsList() {
 
   const sortedData = useMemo(() => {
     return [...debts].sort((a, b) => {
+      // 1. Prioriza dívidas não pagas (is_paid === false vem antes de true)
+      const isPaidA = a.is_paid;
+      const isPaidB = b.is_paid;
+
+      if (isPaidA !== isPaidB) {
+        return isPaidA ? 1 : -1;
+      }
+
       const valueA = a[sortBy];
       const valueB = b[sortBy];
 
-      // 1. Verifica se ambos são nulos (mantém a posição relativa)
+      // 2. Dentro do mesmo grupo (pagas ou não pagas), joga valores nulos para o final
       if (valueA == null && valueB == null) return 0;
-
-      // 2. Se apenas o A for nulo, joga o A para o final
       if (valueA == null) return 1;
-
-      // 3. Se apenas o B for nulo, joga o B para o final
       if (valueB == null) return -1;
 
-      // 4. Lógica normal para valores válidos
+      // 3. Ordenação normal pelo critério escolhido
       if (sortOrder === "asc") {
         return valueA - valueB;
       } else {
@@ -44,6 +48,8 @@ export function UserDebtsList() {
       }
     });
   }, [debts, sortBy, sortOrder]);
+
+  const numberOfDebtsPaid = debts.filter((debt) => !debt.is_paid).length;
 
   if (error) {
     return <ErrorMessageCard onTryAgain={refetch}>{error}</ErrorMessageCard>;
@@ -57,7 +63,8 @@ export function UserDebtsList() {
         </Text>
 
         <Text className="text-muted-foreground text-base dark:text-white/60">
-          {debts.length} restante{debts.length > 1 && "s"}
+          {numberOfDebtsPaid} restante
+          {numberOfDebtsPaid > 1 && "s"}
         </Text>
       </View>
 

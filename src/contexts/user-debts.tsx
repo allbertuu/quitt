@@ -3,7 +3,8 @@ import {
   DebtWithoutId,
   DebtWithoutIdUpdatePayload,
 } from "@/application/ports/debt-repository";
-import { MockDebtRepository } from "@/infra/mocks/mock-debt-repository";
+import { supabaseClient } from "@/infra/supabase/client";
+import { SupabaseDebtRepository } from "@/infra/supabase/supabase-debt-repository";
 import {
   QueryObserverResult,
   RefetchOptions,
@@ -38,7 +39,7 @@ export const UserDebtsContext = createContext({} as UserDebts);
 
 export function UserDebtsProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
-  const debtRepository = new MockDebtRepository();
+  const debtRepository = new SupabaseDebtRepository(supabaseClient);
 
   const userDebtsQuery = useQuery({
     queryKey: ["debts"],

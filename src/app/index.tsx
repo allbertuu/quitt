@@ -20,9 +20,9 @@ export default function Home() {
         </Text>
       </View>
 
-      <ProgressHeader totalPaid={3847} totalInitialDebt={9400} />
-
       <UserDebtsProvider>
+        <ProgressHeader />
+
         <UserDebtsList />
       </UserDebtsProvider>
 

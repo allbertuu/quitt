@@ -1,8 +1,9 @@
 import {
-  DebtRepositoryPort,
-  NewDebtParam,
-} from "@/application/ports/debt-repository-port";
-import { Debt } from "@/domain/debt";
+  Debt,
+  DebtId,
+  DebtRepository,
+  DebtWithoutIdUpdatePayload,
+} from "@/application/ports/debt-repository";
 
 export let DEBTS: Debt[] = [
   {
@@ -11,6 +12,7 @@ export let DEBTS: Debt[] = [
     category: "Cartão de crédito",
     interest: null,
     total_value: 1522.02,
+    is_paid: false,
   },
   {
     id: 1,
@@ -18,6 +20,7 @@ export let DEBTS: Debt[] = [
     category: null,
     interest: 17.9,
     total_value: 3497.09,
+    is_paid: false,
   },
   {
     id: 2,
@@ -25,6 +28,7 @@ export let DEBTS: Debt[] = [
     category: null,
     interest: null,
     total_value: 143.91,
+    is_paid: false,
   },
   {
     id: 3,
@@ -32,10 +36,22 @@ export let DEBTS: Debt[] = [
     category: "Empréstimo pessoal",
     interest: 1,
     total_value: 12.99,
+    is_paid: true,
   },
 ];
 
-export class MockDebtRepositoryAdapter implements DebtRepositoryPort {
+export class MockDebtRepository implements DebtRepository {
+  update(id: DebtId, payload: DebtWithoutIdUpdatePayload): Promise<void> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const foundDebtIdx = DEBTS.findIndex((debt) => debt.id === id);
+        DEBTS[foundDebtIdx] = { ...DEBTS[foundDebtIdx], ...payload };
+        resolve();
+        // reject(new Error("Já foi quitado"));
+      }, 2000);
+    });
+  }
+
   deleteById(id: Debt["id"]): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -51,7 +67,7 @@ export class MockDebtRepositoryAdapter implements DebtRepositoryPort {
     });
   }
 
-  create(newDebt: NewDebtParam): Promise<void> {
+  create(newDebt: Omit<Debt, "id">): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const createdDebt = { id: DEBTS.length + 1, ...newDebt };
