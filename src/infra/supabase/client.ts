@@ -23,7 +23,7 @@ export const supabaseClient = createClient(
        * permite persistir a sessão do usuário no armazenamento local do dispositivo,
        * mesmo após o aplicativo ser fechado ou reiniciado
        */
-      storage: localStorage,
+      storage: process.env.NODE_ENV === "test" ? undefined : localStorage,
       autoRefreshToken: true,
       persistSession: true,
       // "false" porquê Android e iOS não tem uma URL para ler a sessão
