@@ -120,7 +120,7 @@ function MoreActionsDropdown({ children }: { children: React.ReactNode }) {
   return (
     <View className="relative">
       {isDropdownOpen && (
-        <View className="bg-white dark:bg-zinc-800 border border-border dark:border-zinc-800 rounded-2xl p-2 absolute -left-1 top-8 z-10">
+        <View className="bg-white dark:bg-zinc-900 border border-border dark:border-zinc-800 rounded-2xl p-2 absolute -left-1 top-8 z-10">
           {children}
         </View>
       )}
