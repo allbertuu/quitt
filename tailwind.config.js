@@ -4,7 +4,7 @@ import nativewindPreset from "nativewind/preset";
 export default {
   content: [
     "./src/app/**/*.{js,jsx,ts,tsx}",
-    "./src/components/**/*.{js,jsx,ts,tsx}",
+    "./src/presentation/components/**/*.{js,jsx,ts,tsx}",
   ],
   presets: [nativewindPreset],
   theme: {
